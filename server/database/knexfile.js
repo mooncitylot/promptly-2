@@ -23,16 +23,24 @@ export default {
     },
   },
   production: {
-    client: process.env.DB_CLIENT || 'sqlite3',
+    client: 'postgresql',
     connection: {
-      filename: process.env.DB_FILENAME || './database/promptly.db',
+      host: process.env.DB_HOST,
+      port: process.env.DB_PORT || 5432,
+      user: process.env.DB_USER,
+      password: process.env.DB_PASSWORD,
+      database: process.env.DB_NAME,
+      ssl: process.env.NODE_ENV === 'production' ? { rejectUnauthorized: false } : false,
     },
-    useNullAsDefault: true,
     migrations: {
       directory: './database/migrations',
     },
     seeds: {
       directory: './database/seeds',
+    },
+    pool: {
+      min: 2,
+      max: 10,
     },
   },
 }

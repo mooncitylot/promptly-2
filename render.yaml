@@ -7,10 +7,6 @@ services:
     envVars:
       - key: NODE_ENV
         value: production
-      - key: DB_CLIENT
-        value: sqlite3
-      - key: DB_FILENAME
-        value: ./database/promptly.db
       - key: ALLOWED_ORIGINS
         value: https://promptly-frontend.onrender.com
       - key: JWT_SECRET
@@ -21,6 +17,7 @@ services:
         value: 900000
       - key: RATE_LIMIT_MAX_REQUESTS
         value: 100
+    # PostgreSQL connection will be provided by Render's PostgreSQL service
 
   - type: web
     name: promptly-frontend

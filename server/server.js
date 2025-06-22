@@ -6,6 +6,7 @@ import rateLimit from 'express-rate-limit'
 import { config } from 'dotenv'
 import { testConnection } from './database/connection.js'
 import promptsRouter from './routes/prompts.js'
+import usersRouter from './routes/users.js'
 
 // Load environment variables
 config()
@@ -63,6 +64,7 @@ app.get('/health', (req, res) => {
 
 // API routes
 app.use('/api/v1/prompts', promptsRouter)
+app.use('/api/v1/users', usersRouter)
 
 // 404 handler
 app.use('*', (req, res) => {
