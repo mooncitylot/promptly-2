@@ -1,6 +1,6 @@
 import { getUserToken } from '../session/session.js'
 
-const DEFAULT_API = process.env.API_URL
+const DEFAULT_API = process.env.API_URL || 'http://localhost:3001/api/v1'
 
 /** @type {HttpMethods} */
 export const Methods = {
