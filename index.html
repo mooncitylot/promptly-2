@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, shrink-to-fit=no" />
+
+    <!-- Icon for ios app image -->
+    <link rel="apple-touch-icon" href="./images/logo-192.png" />
+
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-title" content="TVB" />
+
+    <meta name="theme-color" content="#6f2519" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-title" content="TVB" />
+
+    <link rel="manifest" href="/manifest.json" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="#1f383b" />
+    <title>promptly-2</title>
+  </head>
+  <body>
+    <script>
+      // Check if the app is installed
+      const isInstalled = window.matchMedia('(display-mode: standalone)').matches
+
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+          navigator.serviceWorker
+            .register('/service-worker.js', { scope: '/' })
+            .then((registration) => {
+              console.log('SW registered: ', registration)
+
+              // Check for service worker updates
+              registration.addEventListener('updatefound', () => {
+                const installingWorker = registration.installing
+                installingWorker.addEventListener('statechange', () => {
+                  if (installingWorker.state === 'installed' && navigator.serviceWorker.controller) {
+                    // A new service worker is installed and ready to activate
+                    if (isInstalled) {
+                      dialog.showModal()
+                    }
+                  }
+                })
+              })
+            })
+            .catch((registrationError) => {
+              console.log('SW registration failed: ', registrationError)
+            })
+        })
+      }
+
+      function updateHeight() {
+        document.documentElement.style.setProperty('--vh', `${window.innerHeight * 0.01}px`)
+      }
+
+      window.addEventListener('resize', updateHeight)
+      window.addEventListener('load', updateHeight)
+    </script>
+
+    <dialog id="install-dialog">
+      <h3>Update Available</h3>
+      <p>A new version of the app is available. Install update now?</p>
+      <div class="button-wrap">
+        <button id="install-button">Install</button>
+        <button id="close-button">Close</button>
+      </div>
+    </dialog>
+    <script>
+      const dialog = document.getElementById('install-dialog')
+      const installButton = document.getElementById('install-button')
+      const closeButton = document.getElementById('close-button')
+
+      installButton.addEventListener('click', () => {
+        console.log('installing')
+        window.location.reload()
+      })
+      closeButton.addEventListener('click', () => {
+        console.log('closing')
+        dialog.close()
+      })
+    </script>
+    <style>
+      * {
+        font-family: monospace;
+      }
+      body {
+        --app-primary-color: #292929;
+        --app-primary-font-color: white;
+        --app-white-2: #e2e2e2;
+        --app-black: #373737;
+        --app-grey: #7e7e7e;
+        --app-light-grey: #d9d9d9;
+        --app-white: #f5f5f5;
+        --app-secondary-color: #757575;
+        --app-border-radius: 4px;
+        --app-header-height: 70px;
+        --app-viewport-height: calc(var(--vh, 1vh) * 100);
+        --light-grey: #b9b9b9;
+
+        --box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+
+        --view-padding: 16px;
+
+        --small-border-radius: 4px;
+        --small-border: 1px solid var(--light-grey);
+
+        --primary-font-family: 'Lato', sans-serif;
+        --primary-border-radius: 8px;
+        --secondary-border-radius: 4px;
+
+        --icon-large: 42px;
+        --icon-medium: 32px;
+        --icon-small: 24px;
+      }
+      html,
+      body {
+        height: 100vh; /* Fallback for browsers that do not support Custom Properties */
+        height: var(--app-viewport-height);
+        margin: 0;
+        padding: 0;
+      }
+
+      body {
+        display: flex;
+        flex-direction: column;
+      }
+      dialog {
+        background-color: white;
+        border: none;
+        max-width: 300px;
+        padding: 16px;
+        border-radius: 8px;
+        box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+        z-index: 1000;
+        font-family: lato;
+      }
+      .button-wrap {
+        display: flex;
+        justify-content: center;
+        gap: 16px;
+        margin-top: 16px;
+      }
+      #install-button {
+        padding: 8px 16px;
+        border-radius: 4px;
+        border: none;
+        background-color: var(--app-primary-color);
+        color: white;
+        font-family: lato;
+        cursor: pointer;
+      }
+      #close-button {
+        padding: 8px 16px;
+        border-radius: 4px;
+        border: none;
+        background-color: white;
+        border: 1px solid var(--app-grey);
+        color: var(--app-grey);
+        font-family: lato;
+        cursor: pointer;
+      }
+      ::backdrop {
+        background-image: linear-gradient(45deg, grey, transparent);
+        opacity: 03;
+      }
+    </style>
+    <app-enter></app-enter>
+    <noscript>Your browser does not support JavaScript!</noscript>
+  </body>
+</html>

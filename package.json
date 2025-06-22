@@ -1,0 +1,55 @@
+{
+  "name": "ummm-app",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "webpack serve --mode development",
+    "build": "webpack --mode production",
+    "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js",
+    "test:watch": "node --experimental-vm-modules node_modules/jest/bin/jest.js --watch"
+  },
+  "type": "module",
+  "author": "",
+  "license": "ISC",
+  "jest": {
+    "verbose": true,
+    "testEnvironment": "jsdom"
+  },
+  "prettier": {
+    "printWidth": 120,
+    "trailingComma": "es5",
+    "semi": false,
+    "singleQuote": true
+  },
+  "devDependencies": {
+    "@babel/plugin-transform-modules-commonjs": "^7.21.2",
+    "@open-wc/testing": "^3.1.7",
+    "eslint": "^8.36.0",
+    "jest": "^29.5.0",
+    "jest-environment-jsdom": "^29.5.0",
+    "jsdom": "^21.1.1",
+    "sinon": "^15.0.2",
+    "url-loader": "^4.1.1",
+    "webpack-dev-server": "^4.13.1"
+  },
+  "dependencies": {
+    "@types/jest": "^29.5.0",
+    "@types/page": "^1.11.5",
+    "clean-webpack-plugin": "^4.0.0",
+    "compression-webpack-plugin": "^10.0.0",
+    "copy-webpack-plugin": "^11.0.0",
+    "dotenv": "^16.0.3",
+    "element-internals-polyfill": "^1.2.6",
+    "file-loader": "^6.2.0",
+    "fuse.js": "^6.6.2",
+    "html-webpack-plugin": "^5.5.0",
+    "lit": "^2.7.0",
+    "path-to-regexp": "^6.2.1",
+    "ts-loader": "^9.4.2",
+    "typescript": "^5.0.2",
+    "webpack": "^5.76.2",
+    "webpack-cli": "^5.0.1",
+    "workbox-webpack-plugin": "^6.6.0"
+  }
+}

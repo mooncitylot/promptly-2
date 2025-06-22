@@ -1,0 +1,33 @@
+echo "checking for .git and cleaning up"
+if [ -d ".git" ]; then
+    git_remote=$(git remote get-url origin)
+    if [ $git_remote == "git@github.com:ummsoftware/ummm-client-template.git" ]; then
+        echo "********** WARNING: YOU ARE STILL ON THE TEMPLATE REPOSITORY. ************";
+        read -p "Are you sure you want to delete the current .git directory and start a new repo? (say yes if you are starting a new project) (y/n): " remove_git; 
+        if [ $remove_git == "y" ]; then
+          rm -rf .git
+          git init
+        fi
+    fi
+fi
+
+
+read -p "Enter the name of the application: " app_name;
+read -p "Enter the display name of the application: " app_display_name;
+read -p "Enter the short name of the application: " app_short_name;
+export LC_ALL=C;  # Set the locale to C to handle character encoding uniformly
+
+# get conformation that these are the values desired
+echo "Application Name: $app_name"
+echo "Application Display Name: $app_display_name"
+echo "Application Short Name: $app_short_name"
+read -p "Are these values correct? (y/n): " correct;
+
+if [ $correct != "y" ]; then
+    echo "Exiting..."
+    exit 1
+fi
+
+find . -type f ! -name "start" -print0 | xargs -0 sed -i '' -e "s/YOUR_APPLICATION_NAME/$app_name/g"
+find . -type f ! -name "start" -print0 | xargs -0 sed -i '' -e "s/YOUR_APPLICATION_DISPLAY_NAME/$app_display_name/g"
+find . -type f ! -name "start" -print0 | xargs -0 sed -i '' -e "s/YOUR_APPLICATION_SHORT_NAME/$app_short_name/g"
