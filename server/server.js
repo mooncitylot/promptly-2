@@ -28,6 +28,7 @@ app.use(
         'https://localhost:8000',
         'http://localhost:8000',
         'https://localhost:8080',
+        ...(process.env.ALLOWED_ORIGINS ? process.env.ALLOWED_ORIGINS.split(',') : []),
       ]
 
       if (allowedOrigins.indexOf(origin) !== -1) {

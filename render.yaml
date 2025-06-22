@@ -12,8 +12,8 @@ services:
         value: sqlite3
       - key: DB_FILENAME
         value: ./database/promptly.db
-      - key: CORS_ORIGIN
-        value: https://your-frontend-app.onrender.com
+      - key: ALLOWED_ORIGINS
+        value: https://promptly-frontend.onrender.com
       - key: JWT_SECRET
         generateValue: true
       - key: JWT_EXPIRES_IN
@@ -22,3 +22,15 @@ services:
         value: 900000
       - key: RATE_LIMIT_MAX_REQUESTS
         value: 100
+
+  - type: web
+    name: promptly-frontend
+    env: static
+    plan: free
+    buildCommand: npm install && npm run build
+    staticPublishPath: ./dist
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: API_URL
+        value: https://promptly-backend.onrender.com/api/v1
