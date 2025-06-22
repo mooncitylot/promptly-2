@@ -1,10 +1,10 @@
 // @ts-nocheck
 import knex from 'knex'
 import knexConfig from '../database/knexfile.js'
-import { config } from 'dotenv'
+import { config as dotenvConfig } from 'dotenv'
 
 // Load environment variables
-config()
+dotenvConfig()
 
 const environment = process.env.NODE_ENV || 'development'
 const config = knexConfig[environment]
@@ -21,9 +21,8 @@ async function runMigrations() {
     console.log('✅ Migrations completed successfully')
 
     // Show migration status
-    const [batchNo, log] = await db.migrate.status()
-    console.log(`📊 Migration batch: ${batchNo}`)
-    console.log('📝 Migration log:', log)
+    const status = await db.migrate.status()
+    console.log(`📊 Migration status:`, status)
   } catch (error) {
     console.error('❌ Migration failed:', error)
     process.exit(1)

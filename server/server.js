@@ -16,10 +16,26 @@ const PORT = process.env.PORT || 3001
 // Security middleware
 app.use(helmet())
 
-// CORS configuration - more permissive for Render
+// CORS configuration - more permissive for development
 app.use(
   cors({
-    origin: process.env.CORS_ORIGIN || '*',
+    origin: function (origin, callback) {
+      // Allow requests with no origin (like mobile apps or curl requests)
+      if (!origin) return callback(null, true)
+
+      const allowedOrigins = [
+        'http://localhost:8080',
+        'https://localhost:8000',
+        'http://localhost:8000',
+        'https://localhost:8080',
+      ]
+
+      if (allowedOrigins.indexOf(origin) !== -1) {
+        callback(null, true)
+      } else {
+        callback(new Error('Not allowed by CORS'))
+      }
+    },
     credentials: true,
   })
 )
