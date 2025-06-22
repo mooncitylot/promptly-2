@@ -2,7 +2,6 @@ services:
   - type: web
     name: promptly-backend
     env: node
-    plan: hobby
     buildCommand: cd server && npm install && npm run build
     startCommand: cd server && npm start
     envVars:
@@ -26,7 +25,6 @@ services:
   - type: web
     name: promptly-frontend
     env: static
-    plan: hobby
     buildCommand: npm install && npm run build
     staticPublishPath: ./dist
     envVars:
